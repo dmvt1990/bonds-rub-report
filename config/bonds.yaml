@@ -1,0 +1,331 @@
+# ---------------------------------------------------------------------------
+# Список облигаций для отчёта.
+#
+# Формат каждой бумаги:
+#   - isin: RU000...
+#     coupon_formula: "КС ЦБ РФ +1,5%"   # опционально, только для флоатеров
+#
+# Для ОФЗ и корпоративных фиксов coupon_formula не указывается — в таблице
+# подставляется число из CSV (COUPONPERCENT). Для флоатеров формула
+# вручную берётся из решения о выпуске на e-disclosure или Cbonds.
+#
+# Порядок внутри секции НЕ важен — код сортирует по дате погашения.
+# ---------------------------------------------------------------------------
+
+sections:
+  # ==========================================================================
+  # Суверенные ОФЗ с фиксированным купоном
+  # ==========================================================================
+  ofz_fixed:
+    title: "ОФЗ с фиксированным купоном"
+    bonds:
+      - { isin: RU000A0JWM07 }  # ОФЗ 26219
+      - { isin: RU000A0ZZYW2 }  # ОФЗ 26226
+      - { isin: RU000A0JS3W6 }  # ОФЗ 26207
+      - { isin: RU000A0JTK38 }  # ОФЗ 26212
+      - { isin: RU000A1038Z7 }  # ОФЗ 26237
+      - { isin: RU000A105RV3 }  # ОФЗ 26242
+      - { isin: RU000A100A82 }  # ОФЗ 26228
+      - { isin: RU000A0JVW48 }  # ОФЗ 26218
+      - { isin: RU000A105FZ9 }  # ОФЗ 26241
+      - { isin: RU000A1074G2 }  # ОФЗ 26244
+      - { isin: RU000A108EG6 }  # ОФЗ 26245
+      - { isin: RU000A108EF8 }  # ОФЗ 26247
+      - { isin: RU000A10D517 }  # ОФЗ 26253
+      - { isin: RU000A106E90 }  # ОФЗ 26243
+      - { isin: RU000A108EH4 }  # ОФЗ 26248
+      - { isin: RU000A103BR0 }  # ОФЗ 26240
+      - { isin: RU000A100EF5 }  # ОФЗ 26230
+      - { isin: RU000A1038V6 }  # ОФЗ 26238
+
+  # ==========================================================================
+  # Облигации с плавающим купоном (полный список из образца Газпромбанка
+  # от 16.04.2026, стр. 3-6). 127 бумаг, отсортированы по дате погашения
+  # и разбиты на несколько слайдов автоматически (пагинация в коде).
+  # ==========================================================================
+  floaters:
+    title: "Облигации с плавающим купоном"
+    bonds:
+      - { isin: RU000A10DYH7, coupon_formula: "КС ЦБ РФ", offer_date: "05.05.2026" }  # ГПБ Финанс 1Р7Р
+      - { isin: RU000A10AFX9, coupon_formula: "КС ЦБ РФ +2,5%" } # Металлоинвест 1Р9
+      - { isin: RU000A10C5F9, coupon_formula: "КС ЦБ РФ +2%", offer_date: "17.07.2026" } # Группа Черкизово Б2Р2
+      - { isin: RU000A10B0A2, coupon_formula: "КС ЦБ РФ +2%" } # Магнит 5Р3
+      - { isin: RU000A109K40, coupon_formula: "КС ЦБ РФ +1,1%" } # ФосАгро БОП02
+      - { isin: RU000A107WL0, coupon_formula: "КС ЦБ РФ +1,1%", offer_date: "08.09.2026" } # ИКС5 Финанс 3Р4
+      - { isin: RU000A109S91, coupon_formula: "КС ЦБ РФ +1,14%" } # Россети МосРегион 1Р7
+      - { isin: RU000A109VM6, coupon_formula: "КС ЦБ РФ +1,75%" } # Камаз БОП13
+      - { isin: RU000A1075S4, coupon_formula: "КС ЦБ РФ +1,1%" } # ИКС5 Финанс 3Р2
+      - { isin: RU000A109R19, coupon_formula: "КС ЦБ РФ +1,5%", offer_date: "25.10.2026" } # ГПБ Финанс 1Р2Р
+      - { isin: RU000A10A349, coupon_formula: "КС ЦБ РФ +2%" } # РусГидро 2Р1
+      - { isin: RU000A108G05, coupon_formula: "КС ЦБ РФ +1,3%" } # Евраз Хол. 3Р01
+      - { isin: RU000A10A4S7, coupon_formula: "КС ЦБ РФ +2%", offer_date: "17.11.2026" } # ФосАгро 2П1
+      - { isin: RU000A1077V4, coupon_formula: "КС ЦБ РФ +2%", offer_date: "17.11.2026" } # Росэксимбанк 2Р4
+      - { isin: RU000A107DP1, coupon_formula: "КС ЦБ РФ +1,15%" } # Россети МР1Р5
+      - { isin: RU000A107HG1, coupon_formula: "КС ЦБ РФ +1,3%" } # Газпром Нефть 3P8R
+      - { isin: RU000A10B4U2, coupon_formula: "КС ЦБ РФ +2,5%", offer_date: "14.12.2026" } # Сибур Холд 1Р4
+      - { isin: RU000A10B4X6, coupon_formula: "КС ЦБ РФ +2,5%", offer_date: "14.12.2026" } # Сибур Холд 1Р6
+      - { isin: RU000A10ASW4, coupon_formula: "КС ЦБ РФ +3,4%" } # Камаз БП14
+      - { isin: RU000A107S10, coupon_formula: "RUONIA +1,3%" } # РСХБ 2Р3
+      - { isin: RU000A107UW1, coupon_formula: "КС ЦБ РФ +1,3%" } # Газпром Нефть 3P10R
+      - { isin: RU000A105W08, coupon_formula: "КС ЦБ РФ +1,3%" } # Металлоинвест 1Р4
+      - { isin: RU000A107UX9, coupon_formula: "RUONIA +1,4%" } # Газпром Нефть 3P11R
+      - { isin: RU000A10B4D8, coupon_formula: "КС ЦБ РФ +1,9%" } # Металлоинвест 1Р13
+      - { isin: RU000A10BG05, coupon_formula: "КС ЦБ РФ +1,8%" } # МегаФон 2Р8
+      - { isin: RU000A10BF48, coupon_formula: "КС ЦБ РФ +1,7%" } # Яндекс 1Р1
+      - { isin: RU000A10BK09, coupon_formula: "КС ЦБ РФ +2%" } # Газпром Нефть 3P14R
+      - { isin: RU000A107AG6, coupon_formula: "КС ЦБ РФ +0,9%" } # Россети центр 1Р03
+      - { isin: RU000A108GR8, coupon_formula: "КС ЦБ РФ +1,2%" } # Ростелеком 1P7R
+      - { isin: RU000A10A7S0, coupon_formula: "КС ЦБ РФ +4%" } # Селектел 1Р5
+      - { isin: RU000A10BQX4, coupon_formula: "КС ЦБ РФ +1,9%" } # Россети Северо-Запад 1Р1
+      - { isin: RU000A10BRR4, coupon_formula: "КС ЦБ РФ +1,85%" } # РусГидро 2Р6
+      - { isin: RU000A10BTC2, coupon_formula: "КС ЦБ РФ +1,75%" } # Ростелеком Р18R
+      - { isin: RU000A107F49, coupon_formula: "КС ЦБ РФ" }  # Газпромбанк 5P2Р
+      - { isin: RU000A108Y86, coupon_formula: "КС ЦБ РФ +1,9%" } # ЛК Европлан 1P7
+      - { isin: RU000A108ZH9, coupon_formula: "КС ЦБ РФ +1,4%", offer_date: "24.06.2027" } # Славнефть 2Р5
+      - { isin: RU000A109098, coupon_formula: "КС ЦБ РФ +1,7%" } # Группа Позитив 1Р1
+      - { isin: RU000A1094F2, coupon_formula: "КС ЦБ РФ +1,35%" } # Группа Черкизово 1P7
+      - { isin: RU000A109528, coupon_formula: "КС ЦБ РФ +1%" } # Россети 1Р13Р
+      - { isin: RU000A108ZT4, coupon_formula: "КС ЦБ РФ +1,9%", offer_date: "19.07.2027" } # Росэксимбанк 2Р5
+      - { isin: RU000A0JXE06, coupon_formula: "КС ЦБ РФ +2,2%", offer_date: "03.08.2027" } # ГТЛК 1P03
+      - { isin: RU000A109JS8, coupon_formula: "КС ЦБ РФ +1,2%" } # Ростелеком 1Р11R
+      - { isin: RU000A109JW0, coupon_formula: "КС ЦБ РФ +1,5%" } # Камаз БОП12
+      - { isin: RU000A102BV4, coupon_formula: "RUONIA" }    # ОФЗ 29020
+      - { isin: RU000A1083U4, coupon_formula: "RUONIA +1,4%" } # МТС 2Р4
+      - { isin: RU000A1083W0, coupon_formula: "КС ЦБ РФ +1,3%" } # МТС 2Р5
+      - { isin: RU000A10D2Q2, coupon_formula: "КС ЦБ РФ +1,4%" } # ГазпромК 3Р6
+      - { isin: RU000A10D459, coupon_formula: "КС ЦБ РФ +1,65%", offer_date: "06.10.2027" } # МТС 2Р13
+      - { isin: RU000A109UD7, coupon_formula: "КС ЦБ РФ +1,25%" } # Атомэнергопром 03
+      - { isin: RU000A109VL8, coupon_formula: "КС ЦБ РФ +2%" } # Совкомбанк ОП5
+      - { isin: RU000A10D7Z2, coupon_formula: "КС ЦБ РФ +3%" } # МСП Факторинг 1Р1
+      - { isin: RU000A109TJ6, coupon_formula: "КС ЦБ РФ +1,5%" } # Банк ПСБ 3Р9
+      - { isin: RU000A10DCJ9, coupon_formula: "КС ЦБ РФ +1,45%" } # Ростелеком 1Р21R
+      - { isin: RU000A10D1W2, coupon_formula: "КС ЦБ РФ +1,15%" } # МегаФон 2Р10
+      - { isin: RU000A107605, coupon_formula: "RUONIA +1,3%" } # Газпром нефть 3Р7R
+      - { isin: RU000A10DDU4, coupon_formula: "КС ЦБ РФ +1,4%" } # Магнит 5Р4
+      - { isin: RU000A1079S6, coupon_formula: "КС ЦБ РФ +1,2%" } # Металоинвест 1Р6
+      - { isin: RU000A10ABC2, coupon_formula: "КС ЦБ РФ +4,5%" } # Новосиб.обл. 34026
+      - { isin: RU000A10DSM9, coupon_formula: "КС ЦБ РФ +2,5%", offer_date: "07.12.2027" } # ПГК 3Р03
+      - { isin: RU000A10DY92, coupon_formula: "КС ЦБ РФ +1,35%" } # Алроса 2Р1
+      - { isin: RU000A10DZT9, coupon_formula: "КС ЦБ РФ +4%" } # А101 1P03
+      - { isin: RU000A107GC2, coupon_formula: "RUONIA +1,15%" } # Дом РФ 2Р3
+      - { isin: RU000A107HH9, coupon_formula: "RUONIA +1,4%" } # Газпром Нефть 3P9R
+      - { isin: RU000A108VL0, coupon_formula: "КС ЦБ РФ +0,5%" } # Газпромбанк 5P12Р
+      - { isin: RU000A1097S8, coupon_formula: "КС ЦБ РФ +0,75%" } # Газпромбанк 5P4Р
+      - { isin: RU000A10EA32, coupon_formula: "КС ЦБ РФ +3%", offer_date: "08.02.2028" } # Почта Росии 3Р2
+      - { isin: RU000A109B33, coupon_formula: "КС ЦБ РФ +1,3%" } # Газпром Нефть 3P13R
+      - { isin: RU000A109KW8, coupon_formula: "КС ЦБ РФ +1,2%", offer_date: "09.03.2028" } # Нижнекамснефтехим 1P3
+      - { isin: RU000A10ELF6, coupon_formula: "КС ЦБ РФ +1,65%", offer_date: "13.03.2028" } # МТС 2Р17
+      - { isin: RU000A10D3K3, coupon_formula: "КС ЦБ РФ +2,9%" } # Почта Росии 3Р2
+      - { isin: RU000A10ETT0, coupon_formula: "КС ЦБ РФ +1,6%" } # Банк ПСБ 4Р4
+      - { isin: RU000A107050, coupon_formula: "RUONIA +1,25%" } # ГазпромК 2Р9
+      - { isin: RU000A107084, coupon_formula: "RUONIA +1,25%" } # ГазпромК 2Р10
+      - { isin: RU000A106375, coupon_formula: "RUONIA +1,3%" } # ГазпромК 07
+      - { isin: RU000A10BGJ4, coupon_formula: "КС ЦБ РФ +2,4%" } # Аэрофлот 2Б01
+      - { isin: RU000A106565, coupon_formula: "КС ЦБ РФ +1,3%" } # Газпром нефть 3P6R
+      - { isin: RU000A10E5X0, coupon_formula: "КС ЦБ РФ +1,5%" } # РусГидро 2Р11
+      - { isin: RU000A10E6Q2, coupon_formula: "КС ЦБ РФ +1,3%", offer_date: "28.04.2028" } # ИКС5 Финанс 3Р16
+      - { isin: RU000A108JV4, coupon_formula: "КС ЦБ РФ +1,25%" } # ГазпромК 3Р2
+      - { isin: RU000A10BP38, coupon_formula: "КС ЦБ РФ +2%" } # Респ. Саха (Якутия) 34005
+      - { isin: RU000A1069N8, coupon_formula: "RUONIA +1,3%" } # ГМК НорНикель БО9
+      - { isin: RU000A10EDW8, coupon_formula: "КС ЦБ РФ +1,35%" } # Магнит 6Р01
+      - { isin: RU000A10BQD6, coupon_formula: "КС ЦБ РФ +1,9%" } # Металлоинвест 1Р14
+      - { isin: RU000A106K43, coupon_formula: "RUONIA +1,3%" } # РЖД 1Р26R
+      - { isin: RU000A10ECM1, coupon_formula: "КС ЦБ РФ +1,5%" } # Газпром Нефть 3Р21
+      - { isin: RU000A109L49, coupon_formula: "КС ЦБ РФ +1,2%" } # Алроса 1Р1
+      - { isin: RU000A10CT41, coupon_formula: "КС ЦБ РФ +1,25%" } # Ростелеком 1P20R
+      - { isin: RU000A10DJR7, coupon_formula: "RUONIA +1,7%", offer_date: "09.09.2028" } # РЖД 1Р49
+      - { isin: RU000A10CSX8, coupon_formula: "КС ЦБ РФ +1,15%", offer_date: "13.09.2028" } # ИКС 5 Финанс 3P14
+      - { isin: RU000A10DM96, coupon_formula: "КС ЦБ РФ +1,3%" } # Россети 1Р19
+      - { isin: RU000A102VR0, coupon_formula: "КС ЦБ РФ +2,1%", offer_date: "14.09.2028" } # ГТЛК 2P01
+      - { isin: RU000A10ERV0, coupon_formula: "КС ЦБ РФ +1,5%" } # Магнит 6Р02
+      - { isin: RU000A10D3B2, coupon_formula: "КС ЦБ РФ +1,4%" } # РусГидро 2Р9
+      - { isin: RU000A106ZU6, coupon_formula: "КС ЦБ РФ +1,2%" } # РусГидро БП12
+      - { isin: RU000A109TW9, coupon_formula: "КС ЦБ РФ +1,1%", offer_date: "04.10.2028" } # ГМК НорНикель БО10
+      - { isin: RU000A10CS91, coupon_formula: "КС ЦБ РФ +2%" } # Росагролизинг 2Р4
+      - { isin: RU000A10DDR0, coupon_formula: "КС ЦБ РФ +1,45%" } # Яндекс 1Р3
+      - { isin: RU000A10DHV3, coupon_formula: "КС ЦБ РФ +2,9%" } # Инарктика 2P5
+      - { isin: RU000A10DFN4, coupon_formula: "КС ЦБ РФ +1,75%", offer_date: "07.11.2028" } # МТС 2Р14
+      - { isin: RU000A1078S8, coupon_formula: "RUONIA +1,25%" } # МТС 2Р2
+      - { isin: RU000A10DRF5, coupon_formula: "КС ЦБ РФ +1,6%" } # Газпром Нефть 5Р3R
+      - { isin: RU000A10DMS9, coupon_formula: "КС ЦБ РФ +1,5%" } # ЯНАО 34005
+      - { isin: RU000A10DJA3, coupon_formula: "КС ЦБ РФ +2,15%" } # Нижегород. обл. 34017
+      - { isin: RU000A10DSG1, coupon_formula: "КС ЦБ РФ +1,9%" } # Новосиб.обл. 34028
+      - { isin: RU000A10E630, coupon_formula: "КС ЦБ РФ +1,5%" } # Газпром Нефть 5Р2R
+      - { isin: RU000A10E8N5, coupon_formula: "КС ЦБ РФ +1,75%", offer_date: "31.01.2029" } # МТС 2Р16
+      - { isin: RU000A10EG28, coupon_formula: "КС ЦБ РФ +1,95%" } # Медси 1Р4
+      - { isin: RU000A10EJA1, coupon_formula: "КС ЦБ РФ +1,5%" } # Газпром Нефть 5Р5R
+      - { isin: RU000A1083A6, coupon_formula: "КС ЦБ РФ +1,3%" } # ГМК НорНикель 1Р07
+      - { isin: RU000A10EPX0, coupon_formula: "КС ЦБ РФ +1,5%" } # РусГидро 2Р12
+      - { isin: RU000A10ET56, coupon_formula: "КС ЦБ РФ +1,7%" } # Россети Сибирь 1Р1
+      - { isin: RU000A10DA66, coupon_formula: "КС ЦБ РФ +1,5%" } # Газпром Нефть 5Р2R
+      - { isin: RU000A10ES57, coupon_formula: "КС ЦБ РФ +1,5%" } # Газпром К 3Р24
+      - { isin: RU000A108447, coupon_formula: "RUONIA +1,8%" } # Росагролизинг 1Р5
+      - { isin: RU000A10DLE1, coupon_formula: "КС ЦБ РФ +1,5%" } # ГазпромК 3P7
+      - { isin: RU000A102A49, coupon_formula: "RUONIA" }    # ОФЗ 29019
+      - { isin: RU000A108Z85, coupon_formula: "RUONIA +1,25%" } # РЖД 1Р32R
+      - { isin: RU000A10DWF5, coupon_formula: "КС ЦБ РФ +1,75%" } # Р.Башкортостан 24017
+      - { isin: RU000A10E7W8, coupon_formula: "КС ЦБ РФ +1,85%" } # Металлоинвест 2Р4
+      - { isin: RU000A10ENS5, coupon_formula: "КС ЦБ РФ +1,75%" } # Металлоинвест 2Р5
+      - { isin: RU000A107AU7, coupon_formula: "RUONIA +1,45%" } # ВЭБ Р-39
+      - { isin: RU000A10CS75, coupon_formula: "КС ЦБ РФ +1,6%" } # Аэрофлот 2Б02
+      - { isin: RU000A10DQL5, coupon_formula: "КС ЦБ РФ +1,8%" } # Металлоинвест 2Р3
+      - { isin: RU000A102A31, coupon_formula: "RUONIA" }    # ОФЗ 29018
+      - { isin: RU000A106LL5, coupon_formula: "RUONIA +1,8%" } # ВЭБ Р-37
+      - { isin: RU000A10D4F1, coupon_formula: "КС ЦБ РФ +1,25%" } # Россети 1Р18
+      - { isin: RU000A10DZL6, coupon_formula: "КС ЦБ РФ +2,3%" } # Томская обл. 35077
+
+  # ==========================================================================
+  # Корпоративные облигации с фиксированным купоном
+  # (полный список из образца от 16.04.2026, стр. 7-11).
+  # 144 бумаги, отсортированы по дате погашения, пагинация в коде.
+  # offer_date берётся из образца PDF (у 56 из 144 бумаг — есть).
+  # Для двух бессрочных бумаг (#278 и #289 по образцу) matdate пуст;
+  # они попадут в конец списка при сортировке.
+  # ==========================================================================
+  corp_fixed:
+    title: "Корпоративные облигации с фиксированным купоном"
+    bonds:
+      - { isin: RU000A102SX4, offer_date: "28.05.2026" }    # Система 1P19
+      - { isin: RU000A101QL5, offer_date: "28.05.2026" }    # ГТЛК 1P17
+      - { isin: RU000A106C92, offer_date: "05.06.2026" }    # Автодор 4P4
+      - { isin: RU000A107AJ0, offer_date: "05.06.2026" }    # ИКС 5 Финанс 3P3
+      - { isin: RU000A106CU5, offer_date: "05.06.2026" }    # Трансмашхолдинг ПБ7
+      - { isin: RU000A103943 }                              # Аэрофлот BO01
+      - { isin: RU000A10AV98, offer_date: "15.06.2026" }    # МТС 1Р28
+      - { isin: RU000A106D59, offer_date: "17.06.2026" }    # МБЭС 2P01
+      - { isin: RU000A103AT8 }                              # Атомэнергопром 1P01
+      - { isin: RU000A10BW62, offer_date: "25.06.2026" }    # МТС 2Р12
+      - { isin: RU000A105PH6, offer_date: "26.06.2026" }    # Россети 1P7
+      - { isin: RU000A106FV6 }                              # РСХБ 2Р12
+      - { isin: RU000A10A8H1 }                              # РусГидро 2Р04
+      - { isin: RU000A108Z93 }                              # ВТБ Лизинг 1Р1
+      - { isin: RU000A101WR0 }                              # ОГК-2 2P01
+      - { isin: RU000A101XS6 }                              # МОЭК 1P04
+      - { isin: RU000A103EZ7 }                              # Ростелеком P06R
+      - { isin: RU000A10BGY3, offer_date: "22.07.2026" }    # МТС 2Р10
+      - { isin: RU000A103G42 }                              # Сбербанк 29R
+      - { isin: RU000A106R95 }                              # Селектел 1P3R
+      - { isin: RU000A105559, offer_date: "31.08.2026" }    # ФСК ЕЭС 1P6
+      - { isin: RU000A10B487 }                              # ДелоПортс 1Р4
+      - { isin: RU000A1057P8 }                              # РусГидро БП6
+      - { isin: RU000A102879, offer_date: "07.10.2026" }    # ВТБ T2-1
+      - { isin: RU000A106K27, offer_date: "14.10.2026" }    # Медси 1P03
+      - { isin: RU000A1064G3, offer_date: "21.10.2026" }    # Газпромбанк 1Р26Р
+      - { isin: RU000A101NG2 }                              # МТС 1Р15
+      - { isin: RU000A104362 }                              # ВСК (Global Ports) 1P2R
+      - { isin: RU000A101Q26, offer_date: "23.11.2026" }    # Система 1P13
+      - { isin: RU000A10BP79, offer_date: "23.11.2026" }    # МТС 2Р11
+      - { isin: RU000A107AM4 }                              # Альфа-Банк 2Р25
+      - { isin: RU000A107A28 }                              # Газпромбанк 5Р1Р
+      - { isin: RU000A105L27, offer_date: "07.12.2026" }    # АФК Система 1P24
+      - { isin: RU000A105NK5, offer_date: "22.12.2026" }    # МОЭК, 001Р-05
+      - { isin: RU000A105NB4, offer_date: "22.12.2026" }    # ТГК-1, БО-001P-01
+      - { isin: RU000A10C6W2 }                              # Абрау-Дюрсо 2P1
+      - { isin: RU000A1003A4, offer_date: "03.02.2027" }    # ГТЛК 1P13
+      - { isin: RU000A10B214 }                              # Ростел Р15R
+      - { isin: RU000A10B1N3, offer_date: "03.03.2027" }    # МТС 2Р7
+      - { isin: RU000A10AT35, offer_date: "17.03.2027" }    # ИКС 5 Финанс 3P11
+      - { isin: RU000A10CQ85, offer_date: "11.03.2027" }    # МТС 1Р29
+      - { isin: RU000A105YB1, offer_date: "15.03.2027" }    # Медси 1P02
+      - { isin: RU000A10BV22 }                              # Респ. Башкортостан
+      - { isin: RU000A102986, offer_date: "20.04.2027" }    # Суэк P06R
+      - { isin: RU000A10BG13 }                              # Ростелеком 1Р16R
+      - { isin: RU000A101012, offer_date: "30.04.2027" }    # Система 1P12
+      - { isin: RU000A106YH6, offer_date: "31.03.2027" }    # Газпромбанк 3Р1Р
+      - { isin: RU000A10AC91 }                              # Респ. Башкортостан
+      - { isin: RU000A0JXRD5 }                              # Почта Росии 001Р02
+      - { isin: RU000A106672, offer_date: "27.04.2027" }    # ГазпромК Р5
+      - { isin: RU000A10ASC6 }                              # Европлан 1Р9
+      - { isin: RU000A107UA7, offer_date: "04.06.2027" }    # Газпромбанк 5P3Р
+      - { isin: RU000A10BTJ7 }                              # Ульяновская обл. 34010
+      - { isin: RU000A102GJ8, offer_date: "16.06.2027" }    # Газпромбанк P19Р
+      - { isin: RU000A10DYP0, offer_date: "23.06.2027" }    # ИКС 5 Финанс 3Р15
+      - { isin: RU000A101SC0, offer_date: "07.06.2027" }    # ГТЛК 1P18
+      - { isin: RU000A102QP4 }                              # РЖД P21R
+      - { isin: RU000A103DS4, offer_date: "09.07.2027" }    # Сибур BO03
+      - { isin: RU000A10BNF8 }                              # РусГидро БП13
+      - { isin: RU000A101GD3 }                              # ГТЛК 1P16
+      - { isin: RU000A10C618 }                              # Магнит4P08
+      - { isin: RU000A10DTG9 }                              # ВТБ-Лизинг 1Р4
+      - { isin: RU000A10CSP4 }                              # Респ. Башкортостан
+      - { isin: RU000A10C5Y0, offer_date: "21.09.2027" }    # ИКС 5 Финанс 3Р13
+      - { isin: RU000A10EML2 }                              # ВТБ Лизинг 1Р5
+      - { isin: RU000A10D4D6 }                              # Амурская обл. 31002
+      - { isin: RU000A1055Y4, offer_date: "06.09.2027" }    # Почта России P2P04
+      - { isin: RU000A106YE3 }                              # Магаданская обл. 2023
+      - { isin: RU000A101RV2 }                              # Респ Казахстан 07
+      - { isin: RU000A10CMD3 }                              # Ростелеком 1Р19R
+      - { isin: RU000A109KC0, offer_date: "19.11.2027" }    # ИКС 5 Финанс 3P3
+      - { isin: RU000A10DZU7 }                              # А101 1Р02
+      - { isin: RU000A105KR6 }                              # ВСК (Global Ports) 1P3R
+      - { isin: RU000A104WF9, offer_date: "22.12.2027" }    # Славнефть 2P04
+      - { isin: RU000A10DLP7 }                              # ХМАО 34002
+      - { isin: RU000A10EN60 }                              # Ростелеком 1Р24R
+      - { isin: RU000A10BW70 }                              # Томская обл. 34074
+      - { isin: RU000A10DBD4 }                              # Ульяновская обл. 34011
+      - { isin: RU000A10EBE0 }                              # Ростелеком 1Р23R
+      - { isin: RU000A10CKZ0 }                              # Евраз Хол. 3Р4
+      - { isin: RU000A10CMT9 }                              # Яндекс 1Р2
+      - { isin: RU000A105TY3, offer_date: "14.02.2028" }    # ВымпелК 1Р06
+      - { isin: RU000A10CU89 }                              # Селектел 1Р6
+      - { isin: RU000A105VC5 }                              # Полюс Б1П3
+      - { isin: RU000A10D3J5 }                              # Почта России 3Р1
+      - { isin: RU000A10E6V2, offer_date: "29.03.2028" }    # ИКС5 Финанс 3Р17
+      - { isin: RU000A0ZYVU5 }                              # Роснефть 2P05
+      - { isin: RU000A10ETL7 }                              # Ростелеком 1Р25R
+      - { isin: RU000A0JXQ44, offer_date: "18.04.2028" }    # РЖД 1P02
+      - { isin: RU000A0JXN05, offer_date: "26.05.2028" }    # РЖД 1P1R
+      - { isin: RU000A105GW4, offer_date: "29.05.2028" }    # Газпромбанк 1Р22Р
+      - { isin: RU000A10BBE6 }                              # ХК Новотранс
+      - { isin: RU000A10DYC8 }                              # ФПК 2Р1
+      - { isin: RU000A10CSQ2 }                              # НоваБев Групп 3Р1
+      - { isin: RU000A10DS74 }                              # Сбербанк 51R
+      - { isin: RU000A10DEN7 }                              # Томская обл. 34075
+      - { isin: RU000A10E739 }                              # Ростелеком 1Р22R
+      - { isin: RU000A101SD8, offer_date: "05.06.2028" }    # ГТЛК 1P19
+      - { isin: RU000A10CC24 }                              # РусГидро 2рР07
+      - { isin: RU000A10CC99, offer_date: "02.08.2028" }    # МБЭС 2P04
+      - { isin: RU000A101Z74, offer_date: "03.08.2028" }    # Газпромбанк 1P17
+      - { isin: RU000A10CWF7 }                              # ПГК 3Р1
+      - { isin: RU000A10EF52 }                              # Сбербанк Sb52R
+      - { isin: RU000A10CP78 }                              # Банк ПСБ 4Р1
+      - { isin: RU000A10D3C0 }                              # РусГидро 2Р8
+      - { isin: RU000A109RR3 }                              # Ульяновская обл. 34009
+      - { isin: RU000A10DHX9 }                              # Инарктика 2Р4
+      - { isin: RU000A10E7G1 }                              # НоваБев Групп 3Р2
+      - { isin: RU000A10DG60 }                              # Новосиб. обл. 34027
+      - { isin: RU000A10EMG2 }                              # Новабев групп 3Р3
+      - { isin: RU000A10EA16, offer_date: "31.01.2029" }    # Почта России 3Р3
+      - { isin: RU000A10EEZ9 }                              # Селектел 1Р7R
+      - { isin: RU000A10C8C0 }                              # РЖД 1Р44R
+      - { isin: RU000A10C8T4 }                              # Сибур 1Р7
+      - { isin: RU000A10BGF2, offer_date: "06.04.2029" }    # РЖД 1Р42R
+      - { isin: RU000A10B495, offer_date: "20.03.2029" }    # РЖД 1Р41R
+      - { isin: RU000A10DSL1, offer_date: "29.03.2029" }    # ПГК 3Р2
+      - { isin: RU000A10ETQ6 }                              # Банк ПСБ 4Р2
+      - { isin: RU000A10ER66 }                              # ФосАгро БО-02-06
+      - { isin: RU000A10BTA6, offer_date: "31.05.2029" }    # РЖД 1Р43R
+      - { isin: RU000A104B46, offer_date: "02.07.2029" }    # Газпромбанк 1Р21Р
+      - { isin: RU000A102LU5, offer_date: "03.07.2029" }    # Газпромбанк 1Р20P
+      - { isin: RU000A10CDZ5 }                              # РЖД 1Р45R
+      - { isin: RU000A10DZW3, offer_date: "08.11.2029" }    # РЖД 1Р-50R
+      - { isin: RU000A10EJQ7 }                              # Атомэнергопром 1Р11
+      - { isin: RU000A10AZ60 }                              # РЖД 1Р38R
+      - { isin: RU000A10BFG2 }                              # Атомэнергопром 05
+      - { isin: RU000A10B115, offer_date: "15.05.2030" }    # РЖД 1Р40R
+      - { isin: RU000A10DWQ2 }                              # Томская обл. 34076
+      - { isin: RU000A10C6L5 }                              # Атомэнергопром 1Р7
+      - { isin: RU000A1017J5 }                              # Газпром нефть 3P2R
+      - { isin: RU000A10CT33 }                              # Атомэнергопром 1Р8
+      - { isin: RU000A103QN7, offer_date: "18.03.2031" }    # Газпром К 1Б-03
+      - { isin: RU000A102HC1 }                              # Сбербанк B02R Суборд
+      - { isin: RU000A10DYG9 }                              # Атомэнергопром 1Р10
+      - { isin: RU000A101RZ3 }                              # Респ Казахстан 11
+      - { isin: RU000A10BK17 }                              # Газпром нефть 3P15R
+      - { isin: RU000A10DZN2 }                              # Томская обл. 35078
+      - { isin: RU000A10CF88 }                              # Газпромбанк 6Р1Р
+      - { isin: RU000A10CQG7 }                              # Газпромбанк 6Р2Р
+      - { isin: RU000A10D491 }                              # Газпромбанк 6Р3Р
+      - { isin: RU000A10DMP5 }                              # Газпромбанк 6Р4Р
+      - { isin: RU000A10EH76 }                              # Газпромбанк 6Р5P
+      - { isin: RU000A106MS8, offer_date: "24.07.2028" }    # Газпром К 2Б-01
