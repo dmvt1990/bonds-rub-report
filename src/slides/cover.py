@@ -6,8 +6,8 @@
 Наша задача: заполнить заголовок, добавить дату и строку
 "только для квалифицированных инвесторов".
 """
-from datetime import date
-from typing import List
+from datetime import date, datetime
+from typing import List, Union
 
 from pptx.presentation import Presentation as PresentationType
 from pptx.util import Pt
@@ -75,8 +75,13 @@ def _set_title_placeholder(slide, title_lines: List[str]) -> None:
         run.font.bold = False
 
 
-def _add_date_text(slide, report_date: date) -> None:
-    """Добавляет строку с датой отчёта под заголовком."""
+def _add_date_text(slide, report_date: Union[date, datetime]) -> None:
+    """Добавляет строку с датой и временем сборки отчёта под заголовком."""
+    if isinstance(report_date, datetime):
+        date_str = f"{format_russian_date(report_date.date())}, {report_date.strftime('%H:%M')}"
+    else:
+        date_str = format_russian_date(report_date)
+
     box = slide.shapes.add_textbox(
         COVER_DATE_LEFT, COVER_DATE_TOP,
         COVER_DATE_WIDTH, COVER_DATE_HEIGHT,
@@ -87,7 +92,7 @@ def _add_date_text(slide, report_date: date) -> None:
 
     p = tf.paragraphs[0]
     run = p.add_run()
-    run.text = format_russian_date(report_date)
+    run.text = date_str
     set_run_font(run, FONT_PRIMARY)
     run.font.size = FONT_SIZE_COVER_DATE
     run.font.color.rgb = COLOR_TEXT_SECONDARY
@@ -124,13 +129,13 @@ def _add_disclaimer_text(slide) -> None:
     run.font.color.rgb = COLOR_TEXT_MUTED
 
 
-def render_cover(prs: PresentationType, report_date: date) -> None:
+def render_cover(prs: PresentationType, report_date: Union[date, datetime]) -> None:
     """
     Добавляет титульный слайд в презентацию.
 
     Args:
         prs: открытая презентация (на основе template.pptx)
-        report_date: дата отчёта, попадёт на обложку в формате '16 апреля 2026 г.'
+        report_date: дата (или datetime) сборки отчёта. datetime → '25 мая 2026 г., 15:30'
     """
     layout = prs.slide_layouts[_COVER_LAYOUT_INDEX]
     slide = prs.slides.add_slide(layout)

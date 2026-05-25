@@ -178,11 +178,8 @@ def _remove_all_slides(prs) -> None:
 def main():
     args = parse_args()
 
-    # Если дата не передана явно — берём предыдущий торговый день.
-    # Это важно: отчёт за торговую сессию готов на следующий день,
-    # поэтому запуск "сегодня" логично отображает данные "за вчера".
     if args.date is None:
-        args.date = previous_trading_day()
+        args.date = datetime.now()
 
     if args.output is None:
         args.output = OUTPUT_DIR / PPTX_FILENAME
