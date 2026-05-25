@@ -8,7 +8,7 @@ Usage:
 """
 import argparse
 import sys
-from datetime import date, datetime
+from datetime import date, datetime, timezone, timedelta
 from pathlib import Path
 
 from pptx import Presentation
@@ -179,7 +179,7 @@ def main():
     args = parse_args()
 
     if args.date is None:
-        args.date = datetime.now()
+        args.date = datetime.now(tz=timezone(timedelta(hours=3)))
 
     if args.output is None:
         args.output = OUTPUT_DIR / PPTX_FILENAME
