@@ -87,10 +87,12 @@ def parse_args():
     return p.parse_args()
 
 
-def build_presentation(report_date: date, source: str, output_path: Path) -> Path:
+def build_presentation(report_date, source: str, output_path: Path) -> Path:
     """Основной пайплайн сборки."""
     if not TEMPLATE_PATH.exists():
         raise FileNotFoundError(f"Не найден шаблон: {TEMPLATE_PATH}")
+
+    date_only = report_date.date() if isinstance(report_date, datetime) else report_date
 
     # Читаем конфиг со списком ISIN
     sections = load_sections()
@@ -116,7 +118,7 @@ def build_presentation(report_date: date, source: str, output_path: Path) -> Pat
         sec = sections_by_id["ofz_fixed"]
         print(f"Loading {len(sec.isins)} ОФЗ from {source}")
         bonds = load_bonds(sec.isins, source=source)
-        render_ofz_fixed(prs, bonds, report_date=report_date, highlighted=highlighted)
+        render_ofz_fixed(prs, bonds, report_date=date_only, highlighted=highlighted)
 
     # --- Слайд 3: флоатеры ---
     if "floaters" in sections_by_id:
@@ -128,7 +130,7 @@ def build_presentation(report_date: date, source: str, output_path: Path) -> Pat
             bonds,
             coupon_formulas=sec.coupon_formulas(),
             offer_dates=sec.offer_dates(),
-            report_date=report_date,
+            report_date=date_only,
             highlighted=highlighted,
         )
 
@@ -141,7 +143,7 @@ def build_presentation(report_date: date, source: str, output_path: Path) -> Pat
             prs,
             bonds,
             offer_dates=sec.offer_dates(),
-            report_date=report_date,
+            report_date=date_only,
             highlighted=highlighted,
         )
 
