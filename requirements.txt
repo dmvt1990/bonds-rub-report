@@ -1,2 +1,2 @@
 # Shared report code (pulls python-pptx, pandas, requests, PyYAML, matplotlib, lxml)
-bonds-report-core @ git+https://github.com/dmvt1990/bonds-report-core.git@v0.1.0
+bonds-report-core @ git+https://github.com/dmvt1990/bonds-report-core.git@v0.1.1

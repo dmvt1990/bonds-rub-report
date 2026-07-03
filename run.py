@@ -30,7 +30,7 @@ from bonds_report_core.sources import BONDS_DATA_URL
 from bonds_report_core.config_loader import load_sections
 from bonds_report_core.data_loader import load_bonds
 from bonds_report_core.pdf_export import convert_pptx_to_pdf, LibreOfficeNotFoundError
-from bonds_report_core.trading_day import previous_trading_day
+from bonds_report_core.trading_day import previous_trading_day, get_report_date
 from bonds_report_core.highlighted import load_highlighted_isins
 from bonds_report_core.utils import remove_all_slides
 from bonds_report_core.slides.cover import render_cover
@@ -114,7 +114,7 @@ def build_presentation(report_date, source: str, output_path: Path) -> Path:
     # Список ISIN, которые надо выделить галочкой "✓" в колонке "В перечне".
     # Файл /opt/config/highlighted_isins.csv — общий для обоих отчётов,
     # правится вручную. Если файла нет — highlighted=set() и галочек ни у кого.
-    highlighted = load_highlighted_isins()
+    highlighted = load_highlighted_isins(Path("/opt/config/highlighted_isins_rub.csv"))
     if highlighted:
         print(f"Highlighted ISINs from перечня: {len(highlighted)}")
 
@@ -180,7 +180,7 @@ def main():
     args = parse_args()
 
     if args.date is None:
-        args.date = datetime.now(tz=timezone(timedelta(hours=3)))
+        args.date = get_report_date()
 
     if args.output is None:
         args.output = OUTPUT_DIR / PPTX_FILENAME
@@ -199,6 +199,7 @@ def main():
     try:
         pdf_path = convert_pptx_to_pdf(args.output, args.pdf_output)
         print(f"PDF saved: {pdf_path}")
+        args.output.unlink(missing_ok=True)  # delete intermediate PPTX
     except LibreOfficeNotFoundError as e:
         print(f"[pdf] Предупреждение: {e}")
     except Exception as e:
