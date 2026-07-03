@@ -24,12 +24,12 @@ from ..constants import (
     TABLE_SLIDE_FOOTNOTE_TOP, TABLE_SLIDE_FOOTNOTE_FONT_SIZE,
     TABLE_FLOATERS_COL_WIDTHS_CM,
 )
-from ..formatting import (
+from bonds_report_core.formatting import (
     format_date_dmy, format_number, format_integer,
 )
-from ..models import Bond
-from ..tables import TableColumn, render_bond_table
-from ..fonts import set_run_font
+from bonds_report_core.models import Bond
+from bonds_report_core.tables import TableColumn, render_bond_table
+from bonds_report_core.fonts import set_run_font
 
 
 # Используем тот же layout 3 (с заголовком, номером страницы и годом)

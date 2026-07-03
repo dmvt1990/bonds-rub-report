@@ -16,19 +16,31 @@ from pptx import Presentation
 # добавляем src/ в путь, чтобы работали относительные импорты
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from src.settings import TEMPLATE_PATH, OUTPUT_DIR
-from src.sources import BONDS_DATA_URL
-from src.config_loader import load_sections
-from src.data_loader import load_bonds
-from src.pdf_export import convert_pptx_to_pdf, LibreOfficeNotFoundError
-from src.trading_day import previous_trading_day
-from src.highlighted import load_highlighted_isins
-from src.slides.cover import render_cover
+# Отчёт-специфичные настройки остаются в репозитории
+from src.settings import (
+    TEMPLATE_PATH,
+    OUTPUT_DIR,
+    CONFIG_DIR,
+    REPORT_TITLE_LINES,
+    COVER_DISCLAIMER,
+)
+
+# Общий код вынесен в пакет bonds_report_core
+from bonds_report_core.sources import BONDS_DATA_URL
+from bonds_report_core.config_loader import load_sections
+from bonds_report_core.data_loader import load_bonds
+from bonds_report_core.pdf_export import convert_pptx_to_pdf, LibreOfficeNotFoundError
+from bonds_report_core.trading_day import previous_trading_day
+from bonds_report_core.highlighted import load_highlighted_isins
+from bonds_report_core.utils import remove_all_slides
+from bonds_report_core.slides.cover import render_cover
+from bonds_report_core.slides.glossary import render_glossary
+from bonds_report_core.slides.disclaimer import render_disclaimer
+
+# Табличные слайды специфичны для этого отчёта
 from src.slides.bond_table_ofz import render_ofz_fixed
 from src.slides.bond_table_floaters import render_floaters
 from src.slides.bond_table_corp_fixed import render_corp_fixed
-from src.slides.glossary import render_glossary
-from src.slides.disclaimer import render_disclaimer
 
 
 # Путь, куда будет сохраняться свежий PDF отчёта.
@@ -94,8 +106,9 @@ def build_presentation(report_date, source: str, output_path: Path) -> Path:
 
     date_only = report_date.date() if isinstance(report_date, datetime) else report_date
 
-    # Читаем конфиг со списком ISIN
-    sections = load_sections()
+    # Читаем конфиг со списком ISIN.
+    # Путь задаём явно (из settings), чтобы не зависеть от cwd.
+    sections = load_sections(CONFIG_DIR / "bonds.yaml")
     sections_by_id = {s.id: s for s in sections}
 
     # Список ISIN, которые надо выделить галочкой "✓" в колонке "В перечне".
@@ -108,10 +121,10 @@ def build_presentation(report_date, source: str, output_path: Path) -> Path:
     # Открываем шаблон как основу. Удаляем 38 демо-слайдов — останется
     # только корпоративный стиль и layout'ы.
     prs = Presentation(str(TEMPLATE_PATH))
-    _remove_all_slides(prs)
+    remove_all_slides(prs)
 
     # --- Слайд 1: обложка ---
-    render_cover(prs, report_date)
+    render_cover(prs, report_date, REPORT_TITLE_LINES, COVER_DISCLAIMER)
 
     # --- Слайд 2: ОФЗ с фиксированным купоном ---
     if "ofz_fixed" in sections_by_id:
@@ -161,20 +174,6 @@ def build_presentation(report_date, source: str, output_path: Path) -> Path:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     prs.save(str(output_path))
     return output_path
-
-
-def _remove_all_slides(prs) -> None:
-    """
-    Удаляет все слайды из презентации, сохраняя slideMasters и slideLayouts.
-    Это нужно, потому что template.pptx содержит 38 демо-слайдов,
-    а мы хотим начать с чистого листа, но с корпоративным стилем.
-    """
-    # Внутренний API python-pptx: удаляем rels и sldIdLst
-    sldIdLst = prs.slides._sldIdLst
-    for sldId in list(sldIdLst):
-        rId = sldId.get("{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id")
-        prs.part.drop_rel(rId)
-        sldIdLst.remove(sldId)
 
 
 def main():

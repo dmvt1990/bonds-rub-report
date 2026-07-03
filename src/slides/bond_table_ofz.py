@@ -19,13 +19,13 @@ from ..constants import (
     TABLE_SLIDE_FOOTNOTE_TOP, TABLE_SLIDE_FOOTNOTE_FONT_SIZE,
     TABLE_OFZ_COL_WIDTHS_CM,
 )
-from ..formatting import (
+from bonds_report_core.formatting import (
     format_date_dmy, format_percent, format_number,
     format_integer, format_duration,
 )
-from ..models import Bond
-from ..tables import TableColumn, render_bond_table
-from ..fonts import set_run_font
+from bonds_report_core.models import Bond
+from bonds_report_core.tables import TableColumn, render_bond_table
+from bonds_report_core.fonts import set_run_font
 
 
 # Используем "Базовый слайд с заголовком, номером страницы и годом"
