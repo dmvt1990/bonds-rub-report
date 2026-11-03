@@ -39,6 +39,8 @@ from bonds_report_core.slides.disclaimer import render_disclaimer
 
 # Табличные слайды специфичны для этого отчёта
 from src.slides.bond_table_ofz import render_ofz_fixed
+from src.slides.bond_table_ofz_in import render_ofz_in
+from src.ofz_in import load_cpi
 from src.slides.bond_table_floaters import render_floaters
 from src.slides.bond_table_corp_fixed import render_corp_fixed
 
@@ -99,6 +101,32 @@ def parse_args():
     return p.parse_args()
 
 
+
+def _linker_issue_dates(bonds) -> dict:
+    """ISSUEDATE по каждому линкеру из MOEX ISS — это дата начала индексации
+    (номинал = 1000 на неё). Нужна только для тихой сверки номинала, поэтому
+    любая сетевая ошибка просто означает «сверку не делаем»."""
+    import datetime as _dt
+    import json as _json
+    import urllib.request as _u
+    out = {}
+    for b in bonds:
+        if not b.secid:
+            continue
+        try:
+            url = (f"https://iss.moex.com/iss/securities/{b.secid}.json"
+                   f"?iss.meta=off&iss.only=description")
+            req = _u.Request(url, headers={"User-Agent": "Mozilla/5.0 (compatible; bonds-rub-report/1.0)"})
+            d = _json.load(_u.urlopen(req, timeout=20))
+            cols = d["description"]["columns"]
+            g = {r[cols.index("name")]: r[cols.index("value")] for r in d["description"]["data"]}
+            if g.get("ISSUEDATE"):
+                out[b.secid] = _dt.date.fromisoformat(g["ISSUEDATE"])
+        except Exception as exc:                                  # noqa: BLE001
+            print(f"ОФЗ-ИН: не получил ISSUEDATE для {b.secid}: {exc}")
+    return out
+
+
 def build_presentation(report_date, source: str, output_path: Path) -> Path:
     """Основной пайплайн сборки."""
     if not TEMPLATE_PATH.exists():
@@ -126,12 +154,35 @@ def build_presentation(report_date, source: str, output_path: Path) -> Path:
     # --- Слайд 1: обложка ---
     render_cover(prs, report_date, REPORT_TITLE_LINES, COVER_DISCLAIMER)
 
+    ofz_pd_curve = []
     # --- Слайд 2: ОФЗ с фиксированным купоном ---
     if "ofz_fixed" in sections_by_id:
         sec = sections_by_id["ofz_fixed"]
         print(f"Loading {len(sec.isins)} ОФЗ from {source}")
         bonds = load_bonds(sec.isins, source=source)
         render_ofz_fixed(prs, bonds, report_date=date_only, highlighted=highlighted)
+        # Кривая ОФЗ-ПД для breakeven по линкерам — из уже загруженных бумаг.
+        ofz_pd_curve = [(b.matdate, b.yield_close) for b in bonds
+                        if b.matdate and b.yield_close is not None]
+
+    # --- Слайд: ОФЗ-ИН (линкеры) ---
+    # Пропускается целиком, если ИПЦ недоступен: суточный отчёт важнее слайда.
+    if "ofz_in" in sections_by_id:
+        sec = sections_by_id["ofz_in"]
+        print(f"Loading {len(sec.isins)} ОФЗ-ИН from {source}")
+        linkers = load_bonds(sec.isins, source=source)
+        cpi = load_cpi()
+        if cpi is None:
+            print("ОФЗ-ИН: ИПЦ недоступен — слайд линкеров пропущен")
+        else:
+            issue_dates = _linker_issue_dates(linkers)
+            render_ofz_in(
+                prs, linkers, cpi,
+                issue_dates=issue_dates,
+                nominal_curve=ofz_pd_curve,
+                report_date=date_only,
+                highlighted=highlighted,
+            )
 
     # --- Слайд 3: флоатеры ---
     if "floaters" in sections_by_id:
